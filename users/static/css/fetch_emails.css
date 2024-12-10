@@ -1,0 +1,31 @@
+/* fetch_emails.css */
+body {
+    background-color: #f4f6f9;
+}
+
+h2 {
+    color: #333;
+}
+
+.messages p {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+button.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.d-flex {
+    margin-top: 20px;
+}

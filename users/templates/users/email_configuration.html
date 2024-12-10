@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Email Configuration | Email Backup{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    {% if email_config %}
+    <!-- Display existing configuration -->
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title">Your Current Email Configuration</h2>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Email Address:</strong> {{ email_config.email_address }}
+                </li>
+                <li class="list-group-item">
+                    <strong>IMAP Server:</strong> {{ email_config.imap_server }}
+                </li>
+                <li class="list-group-item">
+                    <strong>SMTP Server:</strong> {{ email_config.smtp_server }}
+                </li>
+                <li class="list-group-item">
+                    <strong>IMAP Port:</strong> {{ email_config.port_imap }}
+                </li>
+                <li class="list-group-item">
+                    <strong>SMTP Port:</strong> {{ email_config.port_smtp }}
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer d-flex justify-content-center flex-wrap">
+            <!-- Test Configuration Button -->
+            <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" name="test_config" class="btn btn-warning me-3 mb-2">
+                    <i class="bi bi-gear"></i> Test Configuration
+                </button>
+            </form>
+
+            <!-- Sync Folders Button -->
+            <form method="POST" action="{% url 'fetch_folders' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary me-3 mb-2">
+                    <i class="bi bi-folder-symlink"></i> Sync Folders
+                </button>
+            </form>
+
+            <!-- Update Configuration Button -->
+            <button type="button" id="toggleUpdateForm" class="btn btn-info mb-2">
+                <i class="bi bi-pencil-square"></i> Update Configuration
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <!-- No configuration found -->
+    <div class="alert alert-warning mt-4">
+        <h2>No Configuration Found</h2>
+        <p>Please fill out the form below to create your email configuration.</p>
+    </div>
+    {% endif %}
+
+    <!-- Form for creating or updating configuration -->
+    <div class="card shadow mt-4" id="updateForm" style="display: {% if not email_config %}block{% else %}none{% endif %};">
+        <div class="card-header bg-success text-white">
+            <h2 class="card-title">
+                {% if email_config %}Update Email Configuration{% else %}Create Email Configuration{% endif %}
+            </h2>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.email_address.label_tag }}
+                    {{ form.email_address }}
+                </div>
+                <div class="mb-3">
+                    {{ form.imap_server.label_tag }}
+                    {{ form.imap_server }}
+                </div>
+                <div class="mb-3">
+                    {{ form.smtp_server.label_tag }}
+                    {{ form.smtp_server }}
+                </div>
+                <div class="mb-3">
+                    {{ form.email_password.label_tag }}
+                    {{ form.email_password }}
+                </div>
+                <div class="mb-3">
+                    {{ form.port_imap.label_tag }}
+                    {{ form.port_imap }}
+                </div>
+                <div class="mb-3">
+                    {{ form.port_smtp.label_tag }}
+                    {{ form.port_smtp }}
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <!-- Save Configuration Button -->
+                    <button type="submit" name="save_config" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Save Configuration
+                    </button>
+                    
+                    <!-- Return to Dashboard -->
+                    <a href="{% url 'home' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Return
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display Success/Error Messages -->
+    <div class="mt-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* General Container Styling */
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 15px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-footer {
+        padding: 15px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* List Group Items */
+    .list-group-item {
+        font-size: 1.1rem;
+        padding: 10px 15px;
+        border: none;
+    }
+
+    /* Form Styling */
+    form {
+        margin-top: 15px;
+    }
+
+    form .mb-3 label {
+        font-weight: bold;
+    }
+
+    form .mb-3 input {
+        border-radius: 5px;
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    /* Alerts */
+    .alert {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .alert h2 {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
+    /* Toggle Button */
+    #toggleUpdateForm {
+        margin-top: 10px;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+        .card-header,
+        .card-body,
+        .card-footer {
+            text-align: center;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<!-- JavaScript for Toggle Functionality -->
+<script>
+    // Toggle update form visibility
+    document.getElementById('toggleUpdateForm').addEventListener('click', function() {
+        const updateForm = document.getElementById('updateForm');
+        const toggleButton = document.getElementById('toggleUpdateForm');
+        // Toggle form visibility
+        if (updateForm.style.display === 'none') {
+            updateForm.style.display = 'block';
+            toggleButton.textContent = 'Hide Configuration'; // Change button text
+        } else {
+            updateForm.style.display = 'none';
+            toggleButton.textContent = 'Update Configuration'; // Reset button text
+        }
+    });
+</script>
+{% endblock %}

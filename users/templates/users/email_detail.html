@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Email Detail</h1>
+    <p><strong>Subject:</strong> {{ email.subject }}</p>
+    <p><strong>From:</strong> {{ email.sender }}</p>
+    <p><strong>Date:</strong> {{ email.date }}</p>
+
+    <h2>Attachments</h2>
+    {% if email.attachments %}
+        <ul>
+            {% for attachment in email.attachments %}
+                <li>
+                    <a href="{{ attachment.filepath }}" target="_blank">{{ attachment.filename }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No attachments for this email.</p>
+    {% endif %}
+
+    <a href="{% url 'folder_emails' %}">Back to Emails</a>
+{% endblock %}

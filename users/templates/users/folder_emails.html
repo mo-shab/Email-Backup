@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/fetch_emails.css' %}">
+{% block content %}
+<h1>Emails in {{ folder }}</h1>
+
+<form method="get" action="{% url 'folder_emails' %}">
+    <label for="folder">Choose a folder:</label>
+    <select name="folder" id="folder" onchange="this.form.submit()">
+        {% for folder_name in folders %}
+        <option value="{{ folder_name }}" {% if folder_name == folder %}selected{% endif %}>
+            {{ folder_name }}
+        </option>
+        {% endfor %}
+    </select>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Sender</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for email in emails %}
+        <tr>
+            <td>{{ email.subject }}</td>
+            <td>{{ email.sender }}</td>
+            <td>{{ email.date }}</td>
+            <td>
+                <a href="{% url 'email_detail' folder=email.folder email_id=email.id %}">View</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No emails found in this folder.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

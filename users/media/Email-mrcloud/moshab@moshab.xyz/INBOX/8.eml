@@ -1,0 +1,154 @@
+Return-Path: <mo.shab@outlook.fr>
+Delivered-To: moshab@moshab.xyz
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 30 Nov 2024 14:03:27 +0200
+Received: from unknown (HELO output52.mail.ovh.net) (192.168.13.73)
+  by 192.168.9.29 with AES256-GCM-SHA384 encrypted SMTP; 30 Nov 2024 14:03:27 +0200
+Received: from vr50.mail.ovh.net (unknown [10.101.8.50])
+	by out52.mail.ovh.net (Postfix) with ESMTP id 4Y0pbg093pzZMsGm2
+	for <moshab@moshab.xyz>; Sat, 30 Nov 2024 12:03:27 +0000 (UTC)
+Received: from in76.mail.ovh.net (unknown [10.101.4.76])
+	by vr50.mail.ovh.net (Postfix) with ESMTP id 4Y0pbf5skHz4S30M7
+	for <moshab@moshab.xyz>; Sat, 30 Nov 2024 12:03:26 +0000 (UTC)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.92.57.107; helo=eur03-vi1-obe.outbound.protection.outlook.com; envelope-from=mo.shab@outlook.fr; receiver=moshab@moshab.xyz 
+Authentication-Results: in76.mail.ovh.net;
+	dkim=pass (2048-bit key; unprotected) header.d=OUTLOOK.FR header.i=@OUTLOOK.FR header.b="qoyD2mzg";
+	dkim-atps=neutral
+Received: from EUR03-VI1-obe.outbound.protection.outlook.com (mail-vi1eur03olkn2107.outbound.protection.outlook.com [40.92.57.107])
+	by in76.mail.ovh.net (Postfix) with ESMTPS id 4Y0pbf4PzCz2ynkxs
+	for <moshab@moshab.xyz>; Sat, 30 Nov 2024 12:03:26 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z1BVfpKtD1ouVrvjo2KDP8ndy+n/P3CIMqAOBBBZPjxn/X5BdSWrJkS6gmqk3KSYqB/i2X35E80sl6clNDLFOgIXsKIlAFLJlZVxlPzg5D0gK6ccF+xozZdCFPJ5X2ZoziB2AAs/4/EI1IPwK7cdJifWnpj1Gn8j0tY0qf1NuMUt6wGd/2TlLUsnLR+aE4kRGNWZGEZkGbGpE0p8KAISbP1Cok4FwzXsHSFwwtqu3jkPzv+tW/6l0Id0FJCF//seAJn2UOGy55WOCTeaPhhQMeUdkDRYczubWZjygcjJHtoDlcnr8N+PjzXPES+NnrK9r9oISVQK6eQSeGCn4cbr8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EhdoDJdN7RUvy8ajKZdil7b4aaQCuM+TvuyRAQsW7dM=;
+ b=qFXOCr5ou1pArzxa51YfNZIsfrRxxQ52KQWXKFwISDZKY3zz/Zkt6zNfNHA6FDSNDR3nAbXdZh+SEXATWr8syjU07M/0pzDCZ8ixQ7wizHeyEhiM328q0NqsXDhn1YukSP+Gbva+G+S7qWrQ9cJK4/gaK5CsdqhHqXfGacBgUw57fVSQocmZr1FAZDV0V32ERl7QgI+gog8Zb/1JU0tBbD/EZ/9MzQUD4ubNM/q9iXDoJ2RAQbDMl0Al+hUtNvif0mWlTF+uBuDvopXnGAht6iI8Rqe/gP8hmWIDoRF4It6fCVXE0W5q/LwbInb2QTfOJbHkRQB9l4DDKREn1TuvoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.FR;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EhdoDJdN7RUvy8ajKZdil7b4aaQCuM+TvuyRAQsW7dM=;
+ b=qoyD2mzg8KdrP0qcyQjB6uF9nVVPEQ9gsN/Qv7Bzz8XpHb8kTDtqMvEKrZA2TMISrtFRqx+sP7nRJey8mjTxtMQPfAAccBP5Ce6iwjXVQ6f7Qsw2HrG1qDJnQPvR/9jQs4Lip1E771vdXtU8tBBsl3K5u/cMzrNCgX8PdLeSGSeaBWGjdfyTwENbtMmDxt6Xqb7nIggnqXhvViNPFTIzMsU/Kq4ZBtDjqlax7wyp/onG4GSuTpkzglyz8AxqYdvF0tLchMY+WLo0K0Xz1v4eHPYE5m85kRct+SNqE8n7Pln+FfDbiE1j8obWYd7itiU59xAak/LoL7dDsQzr+vte6g==
+Received: from AS8P192MB1924.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:53c::6)
+ by AS2P192MB2036.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:547::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.20; Sat, 30 Nov
+ 2024 12:03:19 +0000
+Received: from AS8P192MB1924.EURP192.PROD.OUTLOOK.COM
+ ([fe80::ce17:c8fd:82b9:1282]) by AS8P192MB1924.EURP192.PROD.OUTLOOK.COM
+ ([fe80::ce17:c8fd:82b9:1282%6]) with mapi id 15.20.8207.010; Sat, 30 Nov 2024
+ 12:03:19 +0000
+From: mohammed shab <mo.shab@outlook.fr>
+To: "moshab@moshab.xyz" <moshab@moshab.xyz>
+Subject: Test From meee
+Thread-Topic: Test From meee
+Thread-Index: AQHbQx/P8aPHhNXGQUiGRudSeUMJ2Q==
+Date: Sat, 30 Nov 2024 12:03:19 +0000
+Message-ID:
+ <AS8P192MB192462A9676C7A2A259BF7269D2B2@AS8P192MB1924.EURP192.PROD.OUTLOOK.COM>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8P192MB1924:EE_|AS2P192MB2036:EE_
+x-ms-office365-filtering-correlation-id: 3921b1d9-302d-48de-42da-08dd1136fb36
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|8062599003|19110799003|8060799006|3025599003|461199028|15080799006|15030799003|7092599003|3412199025|440099028|102099032;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?n1+s1zF1igFq0x5xQLBPH9wUHw9LZ5gVk4EN3x5af16zPE2fpg+5JCenXI?=
+ =?iso-8859-1?Q?HTI9/b9ca17m3rQYr2uUw+bjG+JhI8lJSodXDA17KQfPzjLLxYqNyWpb6R?=
+ =?iso-8859-1?Q?SUDzj5Vphviv/OZonEoyT5591Tqy9197tVTtBM29I15vtr70AYYPO208Xi?=
+ =?iso-8859-1?Q?bzKM9R22419hPe3R9rjbjp6nXE7osnwApvBXA6bwanb4jeoKf9bv1AMzeA?=
+ =?iso-8859-1?Q?n/cMTwW1mkPNxcf14DFSdg4SI7aWCpaifZ8ZL2YgkzyBF7f5T08pM1L+Th?=
+ =?iso-8859-1?Q?30LMj87LvVhRKtJvn8ECLroGuOqFFdEERzH3LNzHASSAR4Gub36qftiaL8?=
+ =?iso-8859-1?Q?zpMQ6T7uM7RMLiSPQpIgU5M3zy+ewjrqJ1ExlGxsaIWYg3ApvvTvT6kIAZ?=
+ =?iso-8859-1?Q?woJe8qT1HzPqHJALN11IrKVACzMMweluTikTz17sL85cBOysM+dd+R5zO3?=
+ =?iso-8859-1?Q?8NMEP8jM6oZG6XLasEDaw+wNZUr6NfmuR5aWfG0Kv08h1eltGXL7xiKhxw?=
+ =?iso-8859-1?Q?FGi54hsS1jHhkL4qCF14+8zsZ1LTDuZ602YWkIiqBuvCisGv48wtLNwtFg?=
+ =?iso-8859-1?Q?QJtOUAPgdUuka8ew0s2kgHamwuZRtnHlV7stJLsTaQ3hq7UU0leyNSzjBE?=
+ =?iso-8859-1?Q?Pf4zL+KsLBb7+qQsAWEC0drBrnvFp61dvuCDzinw3YJ8jJ5sgpaA/aPVW+?=
+ =?iso-8859-1?Q?aXPuS1Sv760WxPjpvubhzLD5xouStGUPXjvBj92V2YtvQPibXSsgetAgk5?=
+ =?iso-8859-1?Q?EXA9PMw4C1TwxwG81+67Nmua7IovVGU5kqXiRsHcOLyBOzrnEuLj5PXDII?=
+ =?iso-8859-1?Q?s2k+QeNbwFtp0hsnFRP7Ilk2s1odEzQJQzh2gaONtrhXI4bykZF4OfGI8P?=
+ =?iso-8859-1?Q?ssZ/tukX3Bt0GTpXfCi97ZL0e+UA7doTzaqXXAcASODBfnw8XgziEzeS0a?=
+ =?iso-8859-1?Q?WM4iQaFdMhKRkfpSN8cerltOwbB1b+vgShr8+twoBdNRLs3v+PcAE+ZVmI?=
+ =?iso-8859-1?Q?ZVzNWSveyTpBmF5o6hBUfqE+yVmRGnHx2CAtYZ8EcsmziYgYYJnI4TN26M?=
+ =?iso-8859-1?Q?HCTOjaZW+VPdzU3TcT8S4lgCd1d72QL5Ezwk0axyQXvJc1g/1jj9JJ16H6?=
+ =?iso-8859-1?Q?OavqPj1XLizSP6N4ZvLFgIM9yq5dw=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?aX8Btv91Rm8OV9EFX0jqjoehp4q3hqIp4ugBR8Az2FPR4AVNRs1b9bQRtU?=
+ =?iso-8859-1?Q?6LKacjMIeliQfybo72EixiI4D8piRLL8vnxcbkfWPYumnCltK+b9QO3Bn+?=
+ =?iso-8859-1?Q?K+R8SG/xaZQIgNd60g+3g9ydbGnpUcg7oNx8SMep5gCnliHpqf8xaybXVi?=
+ =?iso-8859-1?Q?1DYVAo6lHyezihITxE5LiZ9uGDSv68PKFjc5pFfdE9Ves48593kf7o5yiS?=
+ =?iso-8859-1?Q?ZxO+Bikp1AQPZXvw8avSrZp4jMi/rK8jzpGcR9LXSD4RM1mtbTGyiJhp6y?=
+ =?iso-8859-1?Q?teQMDzkaP6MhBocP93wbBWjw5GYdJqRZ4ONz1gauzhjtYSiTIfoQ/383Tp?=
+ =?iso-8859-1?Q?KWJT49zE+7EPoTy0uXKp6T50UG7CD8+UznHaNLr8WNCJx6J2vhAtaSPx6r?=
+ =?iso-8859-1?Q?bk3tg20EJTaEJlRdMsCcOwAdU3Ny8SJwlMLOzv/VLcgvA0uoMakxGKZcJW?=
+ =?iso-8859-1?Q?ATHe7srgZKakSy8UEk9pPJM7OAhUVVPuo/L6k64VUPxWm+aYayYC2P8wYh?=
+ =?iso-8859-1?Q?kJQE/umURWv+WPil0765h3PE3ZbVUUm79kmLjvWxJTGt1x+mPSaK3CV018?=
+ =?iso-8859-1?Q?RKEeo0FUXUpbNhv82VmngO512dvAmF86uKGXOrvGDhhkCA8reud7SCykkB?=
+ =?iso-8859-1?Q?j9QWJKC5cANkDGg5bL1whC+gXfWqb7O3D0IVvFhctLG21SOa9dyAd/MBEu?=
+ =?iso-8859-1?Q?9VPgWyaLH5+mfeJgAqIMTGZJRYRH9xqN53W+oG7hpB+4/49iCAdUgdopLo?=
+ =?iso-8859-1?Q?MIvieDze861pBpvJDYw8aVMrWeVKznPmgmVKS75Cu4b4wZX5EE0tkNKCM1?=
+ =?iso-8859-1?Q?Rux/zQ27dvuAeWK5LHXmyYt3Vya7/sFNWbssJ4kGsgsKlpLt1j11CAtB/3?=
+ =?iso-8859-1?Q?eMS5VU8QcZN525MOabpw2Nzz7tDRBoPx9QUvZLZ5nD16wqGgzDpKaS4H8Z?=
+ =?iso-8859-1?Q?q5Ksjgk+yiaz6bL32RyF0pmN2gHVQ6vWNHInokbsYv8xVNNloZ6v3gQsjE?=
+ =?iso-8859-1?Q?KW051ZqaIxErYFSQf9KKuM3j1hZncga6NGpxdVO9BnWqX8Bkt53QNMpcBY?=
+ =?iso-8859-1?Q?1+is7gj9E+KRf7VU6/t8E9sB01ex7zEQek7QICdFvYCgOaEyapetRDzDnU?=
+ =?iso-8859-1?Q?s4uLLn7JXDYQS2v8Za8eSzXcOEg+mzTRb6+nAPFGxe9dzQpCDelX7Sx2H/?=
+ =?iso-8859-1?Q?w4K0jG0IQQCOAlzSicFML60jHCDUqOTQa2MsnmU9a2BFo4bw8q0iweLkSH?=
+ =?iso-8859-1?Q?tz9mZ7vUclFJJObhpnaw=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_AS8P192MB192462A9676C7A2A259BF7269D2B2AS8P192MB1924EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-78076.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8P192MB1924.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3921b1d9-302d-48de-42da-08dd1136fb36
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Nov 2024 12:03:19.6793
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2P192MB2036
+X-OVH-Remote: 40.92.57.107 (mail-vi1eur03olkn2107.outbound.protection.outlook.com)
+X-Ovh-Tracer-Id: 18378627133306920317
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrheehgdeffecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvufhtfffktgggsegrtddtredttddunecuhfhrohhmpehmohhhrghmmhgvugcushhhrggsuceomhhordhshhgrsgesohhuthhlohhokhdrfhhrqeenucggtffrrghtthgvrhhnpefgveelieekieffveeitddvvdejtdeiiedttdelffejvddtkeetheeuudevffeiveenucfkphepgedtrdelvddrheejrddutdejpddviedtfeemuddtrgeimedvtdgsmeehfegtmeemieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeegtddrledvrdehjedruddtjedphhgvlhhopegvuhhrtdefqdhvihduqdhosggvrdhouhhtsghouhhnugdrphhrohhtvggtthhiohhnrdhouhhtlhhoohhkrdgtohhmpdhmrghilhhfrhhomhepmhhordhshhgrsgesohhuthhlohhokhdrfhhrpdhnsggprhgtphhtthhopedupdhrtghpthhtohepmhhoshhhrggssehmohhshhgrsgdrgiihiidpoffvtefjohhsthepvhhrhedtmgdpughkihhmpehprghsshgmpdhsphhfpehprghsshgmpdhrvghvkffrpehmrghilhdqvhhiudgvuhhrtdefohhlkhhnvddutdejrdhouhhtsghouhhnugdrphhrohhtvggtthhiohhnrdhouhhtlhhoohhkrdgtohhmmgdpghgvohfkrfeptefv
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: OK
+
+--_000_AS8P192MB192462A9676C7A2A259BF7269D2B2AS8P192MB1924EURP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+THis is a Test Email
+
+--_000_AS8P192MB192462A9676C7A2A259BF7269D2B2AS8P192MB1924EURP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Calibri, Helvetica, san=
+s-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+THis is a Test Email</div>
+</body>
+</html>
+
+--_000_AS8P192MB192462A9676C7A2A259BF7269D2B2AS8P192MB1924EURP_--

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Email Configuration Success | Email Backup{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center">Email Configuration Saved Successfully!</h2>
+            <p class="text-center">Your email configuration has been saved. You can now start backing up your emails.</p>
+            <div class="text-center">
+                <a href="{% url 'home' %}" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

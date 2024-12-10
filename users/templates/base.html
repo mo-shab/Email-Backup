@@ -1,0 +1,81 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Backup Application</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg"
+                    alt="profile_picture">
+                <h3>Mohammed SHAB</h3>
+                <p>Designer</p>
+            </div>
+            <ul>
+                <li>
+                    <a href="{% url 'home' %}" class="active">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span class="item">Home</span>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'dashboard' %}">
+                        <span class="icon"><i class="fas fa-desktop"></i></span>
+                        <span class="item">My Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'fetch-emails' %}">
+                        <span class="icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="item">Backup Emails</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="item">Check Emails</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'email_configuration' %}">
+                        <span class="icon"><i class="fas fa-cog"></i></span>
+                        <span class="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'password_reset' %}">
+                        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span class="item">Reset Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span class="item">Logout</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            {% block content %}
+            <!-- Page-specific content will go here -->
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
